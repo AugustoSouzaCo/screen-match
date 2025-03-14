@@ -1,16 +1,26 @@
 package com.augusto.screenmatch.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-
+@Entity
+@Table(name = "episodios")
 public class Episodio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer temporada = 0;
     private String titulo = "";
     private Integer numero = 0;
     private double avaliacao = 0.0;
     private LocalDate dataLancamento;
+
+    @ManyToOne
+    private Serie serie;
+
+    public Episodio() {}
 
     public Episodio(Integer numeroTemp, DadosEpisodio dadosEp) {
         this.temporada = numeroTemp;
@@ -36,6 +46,22 @@ public class Episodio {
                 ", numero=" + numero +
                 ", avaliacao=" + avaliacao +
                 ", dataLancamento=" + dataLancamento;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 
     public Integer getTemporada() {
